@@ -1,0 +1,29 @@
+{
+  "name": "media-session-polyfill",
+  "version": "0.0.1",
+  "description": "Adds Media Session API support to popular websites",
+  "repository": "git@github.com:sameer/media-session-polyfill.git",
+  "author": "Sameer Puri <sameer@users.noreply.github.com>",
+  "license": "MIT OR Apache-2.0",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.8.6",
+    "@babel/types": "^7.8.6",
+    "@types/babel__core": "^7.1.6",
+    "typescript": "^3.8.3",
+    "webextension-polyfill": "^0.6.0",
+    "webpack": "^4.42.0"
+  },
+  "webExt": {
+    "sourceDir": "build/",
+    "artifactsDir": "dist/"
+  },
+  "devDependencies": {
+    "tslint": "^6.0.0"
+  },
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "prepublish": "tsc",
+    "test": "tslint --project tsconfig.json && tsc"
+  }
+}

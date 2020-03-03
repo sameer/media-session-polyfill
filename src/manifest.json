@@ -1,0 +1,29 @@
+{
+    "manifest_version": 2,
+    "name": "Media Session API polyfill",
+    "short_name": "Media Session polyfill",
+    "version": "0.0.1",
+    "description": "Adds Media Session API support to popular websites",
+    "permissions": [
+        "<all_urls>",
+        "storage",
+        "nativeMessaging",
+        "tabs"
+    ],
+    "content_security_policy": "script-src 'self'; object-src 'self'",
+    "content_scripts": [{
+        "matches": ["https://music.amazon.com/*"],
+        "js": ["sites/AmazonMusicMediaSession.js"],
+        "run_at": "document_idle"
+    }],
+    "browser_specific_settings": {
+        "gecko": {
+          "id": "media-session-polyfill@purisa.me"
+        }
+    },
+    "background": {
+        "scripts": [
+            "browser-polyfill.js"
+        ]
+    }
+}
