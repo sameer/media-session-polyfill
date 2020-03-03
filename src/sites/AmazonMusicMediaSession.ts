@@ -1,11 +1,11 @@
-import MediaSession from "../MediaSession";
-alert('hi');
+import MediaSession from '../MediaSession';
 class AmazonMusicMediaSession extends MediaSession {
     private mouseEvent: MouseEvent = new MouseEvent('click', {
         view: window,
         bubbles: true,
-        cancelable: true
+        cancelable: true,
     });
+
     private updatePositionIntervalId: number;
     private updatePositionState: () => void;
 
@@ -22,7 +22,7 @@ class AmazonMusicMediaSession extends MediaSession {
                 this.setPositionState({
                     duration,
                     playbackRate: 1,
-                    position
+                    position,
                 });
             }
         };
@@ -32,7 +32,7 @@ class AmazonMusicMediaSession extends MediaSession {
             const playButton = document.querySelector('span.playButton');
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPlay')) {
                 playButton.dispatchEvent(this.mouseEvent);
-                this.playbackState = "playing";
+                this.playbackState = 'playing';
                 this.updatePositionIntervalId = window.setInterval(this.updatePositionState, 1000);
             }
         });
@@ -40,7 +40,7 @@ class AmazonMusicMediaSession extends MediaSession {
             const playButton = document.querySelector('span.playButton');
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPause')) {
                 playButton.dispatchEvent(this.mouseEvent);
-                this.playbackState = "paused";
+                this.playbackState = 'paused';
                 window.clearInterval(this.updatePositionIntervalId);
             }
         });
@@ -60,3 +60,8 @@ class AmazonMusicMediaSession extends MediaSession {
         });
     }
 }
+
+if (!navigator.mediaSession) {
+    navigator.mediaSession = new AmazonMusicMediaSession();
+}
+export default AmazonMusicMediaSession;

@@ -1,5 +1,5 @@
 type MediaSessionPlaybackState =
-    "none" |
-    "paused" |
-    "playing";
+    'none' |
+    'paused' |
+    'playing';
 export default MediaSessionPlaybackState;

@@ -1,10 +1,10 @@
-import MediaMetadata from "./MediaMetadata";
-import MediaSessionPlaybackState from "./MediaSessionPlaybackState";
-import MediaSessionAction from "./MediaSessionAction";
-import MediaPositionState from "./MediaPositionState";
-import MediaSessionActionHandler from "./MediaSessionActionHandler";
+import MediaMetadata from './MediaMetadata';
+import MediaSessionPlaybackState from './MediaSessionPlaybackState';
+import MediaSessionAction from './MediaSessionAction';
+import MediaPositionState from './MediaPositionState';
+import MediaSessionActionHandler from './MediaSessionActionHandler';
 export default abstract class MediaSession {
-    public playbackState: MediaSessionPlaybackState = "none";
+    public playbackState: MediaSessionPlaybackState = 'none';
     public metadata?: MediaMetadata;
 
     public play?: MediaSessionActionHandler;
@@ -19,5 +19,6 @@ export default abstract class MediaSession {
     public setActionHandler(action: MediaSessionAction, func: MediaSessionActionHandler): void {
         this[action] = func;
     }
-    public setPositionState(position: MediaPositionState): void {};
+
+    public setPositionState(position: MediaPositionState): void {}
 }

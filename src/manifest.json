@@ -13,17 +13,12 @@
     "content_security_policy": "script-src 'self'; object-src 'self'",
     "content_scripts": [{
         "matches": ["https://music.amazon.com/*"],
-        "js": ["sites/AmazonMusicMediaSession.js"],
+        "js": ["AmazonMusicMediaSession.js"],
         "run_at": "document_idle"
     }],
     "browser_specific_settings": {
         "gecko": {
           "id": "media-session-polyfill@purisa.me"
         }
-    },
-    "background": {
-        "scripts": [
-            "browser-polyfill.js"
-        ]
     }
 }

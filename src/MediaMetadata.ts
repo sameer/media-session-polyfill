@@ -1,4 +1,4 @@
-import MediaImage from "./MediaImage";
+import MediaImage from './MediaImage';
 
 export default interface MediaMetadata {
     title?: string;
