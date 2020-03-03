@@ -61,7 +61,7 @@ class AmazonMusicMediaSession extends MediaSession {
     }
 }
 
-if (!navigator.mediaSession) {
-    navigator.mediaSession = new AmazonMusicMediaSession();
+if (!(navigator as any).mediaSession) {
+    (navigator as any).mediaSession = new AmazonMusicMediaSession();
 }
 export default AmazonMusicMediaSession;
