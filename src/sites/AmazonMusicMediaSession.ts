@@ -1,6 +1,6 @@
-import MediaSession from '../MediaSession';
+import MediaSession from '../api/MediaSession';
 class AmazonMusicMediaSession extends MediaSession {
-    private mouseEvent: MouseEvent = new MouseEvent('click', {
+    private mouseEventBuilder: () => MouseEvent = () => new MouseEvent('click', {
         view: window,
         bubbles: true,
         cancelable: true,
@@ -31,7 +31,7 @@ class AmazonMusicMediaSession extends MediaSession {
         this.setActionHandler('play', () => {
             const playButton = document.querySelector('span.playButton');
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPlay')) {
-                playButton.dispatchEvent(this.mouseEvent);
+                playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'playing';
                 this.updatePositionIntervalId = window.setInterval(this.updatePositionState, 1000);
             }
@@ -39,7 +39,7 @@ class AmazonMusicMediaSession extends MediaSession {
         this.setActionHandler('pause', () => {
             const playButton = document.querySelector('span.playButton');
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPause')) {
-                playButton.dispatchEvent(this.mouseEvent);
+                playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'paused';
                 window.clearInterval(this.updatePositionIntervalId);
             }
@@ -48,20 +48,26 @@ class AmazonMusicMediaSession extends MediaSession {
         this.setActionHandler('nexttrack', () => {
             const nextButton = document.querySelector('#transportPlayNext');
             if (nextButton && !nextButton.classList.contains('disabled')) {
-                nextButton.dispatchEvent(this.mouseEvent);
+                nextButton.dispatchEvent(this.mouseEventBuilder());
             }
         });
 
         this.setActionHandler('previoustrack', () => {
             const previousButton = document.querySelector('#transportPlayPrevious');
             if (previousButton && !previousButton.classList.contains('disabled')) {
-                previousButton.dispatchEvent(this.mouseEvent);
+                previousButton.dispatchEvent(this.mouseEventBuilder());
             }
         });
     }
+    // public toString(): string {
+    //     let objStr = '{\n';
+    //     for (const member in this) {
+    //         objStr += `'${member}' : ${typeof this[member] === 'string' ? '\'' + this[member] + '\'' : this[member]},\n`;
+    //     }
+    //     objStr += '\n}';
+    //     return objStr;
+    // }
 }
 
-if (!(navigator as any).mediaSession) {
-    (navigator as any).mediaSession = new AmazonMusicMediaSession();
-}
-export default AmazonMusicMediaSession;
+
+const mediaSession = new AmazonMusicMediaSession();
