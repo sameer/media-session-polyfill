@@ -2,7 +2,14 @@
 
 Adds Media Session API support to popular media sites with basic controls via system play/pause buttons.
 
-# TO-DO
+## Building
+
+```bash
+yarn build
+web-ext build
+```
+
+## TO-DO
 - [ ] Site Support
     - [x] Amazon Music
     - [ ] Spotify
