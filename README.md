@@ -10,6 +10,7 @@ web-ext build
 ```
 
 ## TO-DO
+
 - [ ] Site Support
     - [x] Amazon Music: play/pause/next/prev
     - [ ] Spotify
@@ -28,3 +29,7 @@ web-ext build
 - [ ] Media Key Commands: currently just listens for key up events anywhere in the browser
     - [ ] File Firefox bug for extensions seeing all media commands as the first registered command
 
+## Known Bugs/Issues
+
+* https://bugzilla.mozilla.org/show_bug.cgi?id=1251795
+* https://bugzilla.mozilla.org/show_bug.cgi?id=1411795
