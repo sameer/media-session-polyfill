@@ -28,7 +28,16 @@
             "js": [
                 "AmazonPrimeVideoMediaSession.js"
             ],
-            "run_at": "document_idle"
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://www.youtube.com/*"
+            ],
+            "js": [
+                "YoutubeMediaSession.js"
+            ],
+            "run_at": "document_start"
         },
         {
             "matches": [

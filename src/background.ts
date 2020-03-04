@@ -2,7 +2,8 @@
 const supportedSiteRegexes: RegExp[] = [
     /https:\/\/music\.amazon\.com\/*/,
     /https:\/\/www\.amazon.com\/(Amazon-Video|gp\/video)\/*/,
-    /https:\/\/primevideo.com\/*/
+    /https:\/\/primevideo.com\/*/,
+    /https:\/\/www\.youtube\.com\/*/
 ];
 
 const callback: browser.runtime.onMessagePromise = (message: any, sender, _sendResponse) => {

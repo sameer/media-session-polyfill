@@ -45,6 +45,7 @@ class AmazonMusicMediaSession extends MediaSession {
                 }
             }
         });
+
         this.setActionHandler('pause', () => {
             const playButton = document.querySelector(this.playButtonSelector);
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPause')) {
