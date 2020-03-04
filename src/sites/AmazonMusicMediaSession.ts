@@ -40,7 +40,9 @@ class AmazonMusicMediaSession extends MediaSession {
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPlay')) {
                 playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'playing';
-                this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
+                if (this.updatePositionAndPlaybackIntervalId == -1) {
+                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
+                }
             }
         });
         this.setActionHandler('pause', () => {
@@ -48,7 +50,10 @@ class AmazonMusicMediaSession extends MediaSession {
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPause')) {
                 playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'paused';
-                window.clearInterval(this.updatePositionAndPlaybackIntervalId);
+                if (this.updatePositionAndPlaybackIntervalId != -1) {
+                    window.clearInterval(this.updatePositionAndPlaybackIntervalId);
+                }
+                this.updatePositionAndPlaybackIntervalId = -1;
             }
         });
 
@@ -56,6 +61,9 @@ class AmazonMusicMediaSession extends MediaSession {
             const nextButton = document.querySelector('#transportPlayNext');
             if (nextButton && !nextButton.classList.contains('disabled')) {
                 nextButton.dispatchEvent(this.mouseEventBuilder());
+                if (this.updatePositionAndPlaybackIntervalId == -1) {
+                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
+                }
             }
         });
 
@@ -63,6 +71,9 @@ class AmazonMusicMediaSession extends MediaSession {
             const previousButton = document.querySelector('#transportPlayPrevious');
             if (previousButton && !previousButton.classList.contains('disabled')) {
                 previousButton.dispatchEvent(this.mouseEventBuilder());
+                if (this.updatePositionAndPlaybackIntervalId == -1) {
+                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
+                }
             }
         });
     }
