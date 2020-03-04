@@ -22,6 +22,8 @@ web-ext build
     - [x] Linux
     - [ ] MacOS
     - [ ] Windows: media keys intercepted by OS
+- [ ] Key Support
+    - [x] Play/Pause, Prev, Next (keyboard, bluetooth headphones, etc.)
 - [ ] System Integration
     - [ ] MPRIS on Linux: if keys are bound by the window manager, can't be seen by the browser
         - [ ] playerctl
