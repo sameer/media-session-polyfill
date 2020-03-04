@@ -1,6 +1,8 @@
 // Forward command to the most recent supported tab.
 const supportedSiteRegexes: RegExp[] = [
-    /https:\/\/music\.amazon\.com\/*/
+    /https:\/\/music\.amazon\.com\/*/,
+    /https:\/\/www\.amazon.com\/(Amazon-Video|gp\/video)\/*/,
+    /https:\/\/primevideo.com\/*/
 ];
 
 const callback: browser.runtime.onMessagePromise = (message: any, sender, _sendResponse) => {

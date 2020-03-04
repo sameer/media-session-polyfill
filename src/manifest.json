@@ -21,6 +21,17 @@
         },
         {
             "matches": [
+                "https://www.amazon.com/Amazon-Video/*",
+                "https://www.amazon.com/gp/video/*",
+                "https://primevideo.com/*"
+            ],
+            "js": [
+                "AmazonPrimeVideoMediaSession.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
                 "<all_urls>"
             ],
             "js": [

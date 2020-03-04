@@ -11,10 +11,12 @@ web-ext build
 
 ## TO-DO
 - [ ] Site Support
-    - [x] Amazon Music
+    - [x] Amazon Music: play/pause/next/prev
     - [ ] Spotify
     - [ ] Youtube
-    - [ ] Prime Video
+    - [x] Prime Video: play/pause only
+        - They check [isTrusted](https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted) and ignore dispatched mouse/key events
+        - Maybe there is another means of global detection?
 - [ ] System Integration
     - [ ] MPRIS on Linux: if keys are bound by the window manager, can't be seen by the browser
         - [ ] playerctl
