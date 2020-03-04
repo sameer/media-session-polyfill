@@ -7,8 +7,8 @@
   "license": "MIT OR Apache-2.0",
   "private": true,
   "webExt": {
-    "sourceDir": "build/",
-    "artifactsDir": "dist/"
+    "sourceDir": "dist/",
+    "artifactsDir": "./"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
