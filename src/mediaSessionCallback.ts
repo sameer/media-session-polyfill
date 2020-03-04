@@ -6,10 +6,15 @@ export default function mediaSessionCallback(session: MediaSession): browser.run
             return Promise.resolve();
         }
         if (message.key) {
-            if ((message.key == 'MediaPlay' || message.key == 'MediaPlayPause') && session.playbackState == 'paused' && session.play) {
-                session.play();
-            } else if ((message.key == 'MediaPlay' || message.key == 'MediaPlayPause') && session.playbackState == 'playing' && session.pause) {
-                session.pause();
+            if (message.key == 'MediaPlay' || message.key == 'MediaPlayPause'){
+                    if(session.playbackState == 'paused' && session.play) {
+                        session.play();
+                    }
+                    else if(session.playbackState == 'playing' && session.pause){
+                        session.pause();
+                    }
+                }
+            }
             } else if (message.key == 'MediaTrackNext' && session.nexttrack) {
                 session.nexttrack();
             } else if (message.key == 'MediaTrackPrevious' && session.previoustrack) {
