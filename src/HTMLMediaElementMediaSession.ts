@@ -24,14 +24,13 @@ export default abstract class HTMLMediaElementMediaSession extends MediaSession 
             }
         };
         this.updatePositionAndPlaybackState();
-        this.updatePositionAndPlaybackIntervalId = this.playbackState == 'playing' ? window.setInterval(this.updatePositionAndPlaybackState, 1000) : -1;
+        this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
 
         this.setActionHandler('play', () => {
             const player = document.querySelector(this.mediaSelector);
             if (player && player instanceof HTMLMediaElement) {
                 player.play();
                 this.playbackState = 'playing';
-                this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
             }
         });
 
@@ -40,7 +39,6 @@ export default abstract class HTMLMediaElementMediaSession extends MediaSession 
             if (player && player instanceof HTMLMediaElement) {
                 player.pause();
                 this.playbackState = 'paused';
-                window.clearInterval(this.updatePositionAndPlaybackIntervalId);
             }
         });
     }

@@ -33,16 +33,13 @@ class AmazonMusicMediaSession extends MediaSession {
             this.playbackState = playButton ? (playButton.classList.contains('disabled') ? 'none' : (playButton.classList.contains('playerIconPlay') ? 'paused' : 'playing')) : 'none';
         };
         this.updatePositionAndPlaybackState();
-        this.updatePositionAndPlaybackIntervalId = this.playbackState == 'playing' ? window.setInterval(this.updatePositionAndPlaybackState, 1000) : -1;
+        this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
 
         this.setActionHandler('play', () => {
             const playButton = document.querySelector(this.playButtonSelector);
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPlay')) {
                 playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'playing';
-                if (this.updatePositionAndPlaybackIntervalId == -1) {
-                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
-                }
             }
         });
 
@@ -51,10 +48,6 @@ class AmazonMusicMediaSession extends MediaSession {
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPause')) {
                 playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'paused';
-                if (this.updatePositionAndPlaybackIntervalId != -1) {
-                    window.clearInterval(this.updatePositionAndPlaybackIntervalId);
-                }
-                this.updatePositionAndPlaybackIntervalId = -1;
             }
         });
 
@@ -62,9 +55,7 @@ class AmazonMusicMediaSession extends MediaSession {
             const nextButton = document.querySelector('#transportPlayNext');
             if (nextButton && !nextButton.classList.contains('disabled')) {
                 nextButton.dispatchEvent(this.mouseEventBuilder());
-                if (this.updatePositionAndPlaybackIntervalId == -1) {
-                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
-                }
+                this.playbackState = 'playing';
             }
         });
 
@@ -72,9 +63,7 @@ class AmazonMusicMediaSession extends MediaSession {
             const previousButton = document.querySelector('#transportPlayPrevious');
             if (previousButton && !previousButton.classList.contains('disabled')) {
                 previousButton.dispatchEvent(this.mouseEventBuilder());
-                if (this.updatePositionAndPlaybackIntervalId == -1) {
-                    this.updatePositionAndPlaybackIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
-                }
+                this.playbackState = 'playing';
             }
         });
     }
