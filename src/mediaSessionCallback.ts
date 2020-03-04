@@ -6,9 +6,9 @@ export default function mediaSessionCallback(session: MediaSession): browser.run
             return Promise.resolve();
         }
         if (message.key) {
-            if (message.key == 'MediaPlay' && session.playbackState == 'paused' && session.play) {
+            if ((message.key == 'MediaPlay' || message.key == 'MediaPlayPause') && session.playbackState == 'paused' && session.play) {
                 session.play();
-            } else if (message.key == 'MediaPlay' && session.playbackState == 'playing' && session.pause) {
+            } else if ((message.key == 'MediaPlay' || message.key == 'MediaPlayPause') && session.playbackState == 'playing' && session.pause) {
                 session.pause();
             } else if (message.key == 'MediaTrackNext' && session.nexttrack) {
                 session.nexttrack();
