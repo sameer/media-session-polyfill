@@ -13,7 +13,7 @@ web-ext build
 - [ ] Site Support
     - [x] Amazon Music: play/pause/next/prev
     - [ ] Spotify
-    - [ ] Youtube
+    - [x] Youtube: pause/play only
     - [x] Prime Video: play/pause only
         - They check [isTrusted](https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted) and ignore dispatched mouse/key events
         - Maybe there is another means of global detection?
