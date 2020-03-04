@@ -17,6 +17,10 @@ web-ext build
     - [x] Prime Video: play/pause only
         - They check [isTrusted](https://developer.mozilla.org/en-US/docs/Web/API/Event/isTrusted) and ignore dispatched mouse/key events
         - Maybe there is another means of global detection?
+- [ ] System Support
+    - [x] Linux
+    - [ ] MacOS
+    - [ ] Windows: media keys intercepted by OS
 - [ ] System Integration
     - [ ] MPRIS on Linux: if keys are bound by the window manager, can't be seen by the browser
         - [ ] playerctl

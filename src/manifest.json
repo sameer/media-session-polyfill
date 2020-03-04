@@ -2,8 +2,8 @@
     "manifest_version": 2,
     "name": "Media Session API Polyfill",
     "short_name": "Media Session Polyfill",
-    "version": "0.0.1",
-    "description": " Adds Media Session API support to popular websites, letting you use pause/play buttons on your computer.",
+    "version": "0.0.2",
+    "description": " Adds Media Session API support to popular websites, letting you use pause/play buttons on your Linux computer.",
     "permissions": [
         "<all_urls>",
         "tabs"
