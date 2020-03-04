@@ -6,10 +6,6 @@
   "author": "Sameer Puri <sameer@users.noreply.github.com>",
   "license": "MIT OR Apache-2.0",
   "private": true,
-  "dependencies": {
-    "dbus-next": "^0.8.2",
-    "webextension-polyfill": "^0.6.0"
-  },
   "webExt": {
     "sourceDir": "build/",
     "artifactsDir": "dist/"

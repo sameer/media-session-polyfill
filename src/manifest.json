@@ -6,19 +6,40 @@
     "description": "Adds Media Session API support to popular websites",
     "permissions": [
         "<all_urls>",
-        "storage",
-        "nativeMessaging",
         "tabs"
     ],
     "content_security_policy": "script-src 'self'; object-src 'self'",
-    "content_scripts": [{
-        "matches": ["https://music.amazon.com/*"],
-        "js": ["AmazonMusicMediaSession.js"],
-        "run_at": "document_idle"
-    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://music.amazon.com/*"
+            ],
+            "js": [
+                "AmazonMusicMediaSession.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "listener.js"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "background.js"
+        ]
+    },
     "browser_specific_settings": {
         "gecko": {
-          "id": "media-session-polyfill@purisa.me"
+            "id": "media-session-polyfill@purisa.me"
         }
     }
 }

@@ -3,12 +3,15 @@ const fs = require('fs');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const srcPrefix = './src/sites/';
-const entries = {};
+const entries = {
+    background: './src/background.ts'
+};
 fs.readdirSync(srcPrefix).forEach(entry => {
     entries[entry.replace(/.(ts|js)x?$/, '')] = srcPrefix + entry;
 });
 
 module.exports = {
+    mode: "production",
     entry: entries,
     plugins: [
         new CopyPlugin([
@@ -22,7 +25,6 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.js']
     },
-    mode: 'development',
     module: {
         rules: [
             {

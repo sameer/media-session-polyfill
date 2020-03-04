@@ -1,56 +1,21 @@
-// import * as browser from 'webextension-polyfill';
-import * as dbus from 'dbus-next';
+// Forward command to the most recent supported tab.
+const supportedSiteRegexes: RegExp[] = [
+    /https:\/\/music\.amazon\.com\/*/
+];
 
-const MPRIS_IFACE = 'org.mpris.MediaPlayer2.Player';
-const MPRIS_PATH = '/org/mpris/MediaPlayer2';
-const PROPERTIES_IFACE = 'org.freedesktop.DBus.Properties';
-
-const bus = dbus.sessionBus();
-
-let {
-    Interface, property, method, signal,
-    ACCESS_READ, ACCESS_WRITE, ACCESS_READWRITE
-} = dbus.interface;
-
-class MPRISInterface extends Interface {
-    @property({ signature: 's', access: ACCESS_READ })
-    PlaybackStatus: string = 'stopped';
-
-    @method({ inSignature: '', outSignature: '' })
-    Next(): void {
+const callback: browser.runtime.onMessagePromise = (message: any, sender, _sendResponse) => {
+    if (message.key) {
+        browser.tabs.query({}).then(tabs => {
+            const sortedTabs = tabs
+                .filter(tab => tab.id != -1 && tab.id != browser.tabs.TAB_ID_NONE)
+                .filter(tab => supportedSiteRegexes.filter(regex => tab.url && regex.test(tab.url)).length > 0)
+                .sort((a, b) => a.lastAccessed - b.lastAccessed)
+                .reverse();
+            if (sortedTabs.length > 0 && sortedTabs[0].id) {
+                browser.tabs.sendMessage(sortedTabs[0].id, message);
+            }
+        });
     }
-
-    @method({ inSignature: '', outSignature: '' })
-    Previous(): void {
-    }
-
-    @method({ inSignature: '', outSignature: '' })
-    Pause(): void {
-    }
-
-    @method({ inSignature: '', outSignature: '' })
-    PlayPause(): void {
-    }
-
-    @method({ inSignature: '', outSignature: '' })
-    Stop(): void {
-    }
-
-    @method({ inSignature: '', outSignature: '' })
-    Play(): void {
-    }
-
-    @method({ inSignature: 'x', outSignature: '' })
-    Seek(offset: number): void {
-    }
-
-    @method({ inSignature: 'ox', outSignature: '' })
-    SetPosition(trackId: string, position: number): void {
-    }
-}
-
-browser.runtime.onMessage.addListener(
-    (message: any, _sender: any): boolean => {
-        bus.export(`${MPRIS_PATH}/${message}`, new MPRISInterface(message));
-        return true;
-    });
+    return Promise.resolve();
+};
+browser.runtime.onMessage.addListener(callback);

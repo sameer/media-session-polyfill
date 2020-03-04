@@ -7,13 +7,14 @@ class AmazonMusicMediaSession extends MediaSession {
     });
 
     private updatePositionIntervalId: number;
-    private updatePositionState: () => void;
+    private updatePositionAndPlaybackState: () => void;
 
     constructor() {
         super();
-        this.updatePositionState = () => {
+        this.updatePositionAndPlaybackState = () => {
             const scrubberBackground = document.querySelector('span.scrubberBackground');
             const remainingTime = document.querySelector('div.listViewDuration');
+            const playButton = document.querySelector('span.playButton');
             if (scrubberBackground && scrubberBackground instanceof HTMLElement && remainingTime && remainingTime instanceof HTMLElement) {
                 const positionNormalized = (Number.parseFloat(scrubberBackground.style.width)) / 100.0;
                 const remaining = remainingTime.innerText.split(':').map(Number.parseInt).map(Math.abs).reverse().reduce((acc, cur, i) => i < 2 ? acc + cur * (60 ** i) : acc, 0);
@@ -25,15 +26,16 @@ class AmazonMusicMediaSession extends MediaSession {
                     position,
                 });
             }
+            this.playbackState = playButton ? (playButton.classList.contains('disabled') ? 'none' : (playButton.classList.contains('playerIconPlay') ? 'paused' : 'playing')) : 'none';
         };
-        this.updatePositionIntervalId = window.setInterval(this.updatePositionState, 1000);
+        this.updatePositionIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
 
         this.setActionHandler('play', () => {
             const playButton = document.querySelector('span.playButton');
             if (playButton && !playButton.classList.contains('disabled') && playButton.classList.contains('playerIconPlay')) {
                 playButton.dispatchEvent(this.mouseEventBuilder());
                 this.playbackState = 'playing';
-                this.updatePositionIntervalId = window.setInterval(this.updatePositionState, 1000);
+                this.updatePositionIntervalId = window.setInterval(this.updatePositionAndPlaybackState, 1000);
             }
         });
         this.setActionHandler('pause', () => {
@@ -70,4 +72,22 @@ class AmazonMusicMediaSession extends MediaSession {
 }
 
 
-const mediaSession = new AmazonMusicMediaSession();
+const session = new AmazonMusicMediaSession();
+const callback: browser.runtime.onMessagePromise = (message: any, sender, _sendResponse) => {
+    if ((sender as any).envType && (sender as any).envType != 'addon_child') {
+        return Promise.resolve();
+    }
+    if (message.key) {
+        if (message.key == 'MediaPlay' && session.playbackState == 'paused' && session.play) {
+            session.play();
+        } else if (message.key == 'MediaPlay' && session.playbackState == 'playing' && session.pause) {
+            session.pause();
+        } else if (message.key == 'MediaTrackNext' && session.nexttrack) {
+            session.nexttrack();
+        } else if (message.key == 'MediaTrackPrevious' && session.previoustrack) {
+            session.previoustrack();
+        }
+    }
+    return Promise.resolve();
+};
+browser.runtime.onMessage.addListener(callback);
